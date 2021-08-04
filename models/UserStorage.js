@@ -4,6 +4,9 @@ const { response } = require("express");
 const db = require("../config/db");
 
 class UserStorage {
+    constructor(body){
+        this.body = body;
+    }
         static getUserInfo(email) {
            return new Promise((resolve, reject) => {
                  const query = "SELECT * FROM Member WHERE Email = ?;";
@@ -13,7 +16,7 @@ class UserStorage {
               });
               });
             }
-
+            
         static async save(userinfo){
              return new Promise((resolve, reject) => {
                  const query = "INSERT INTO Member(Nickname, Age_range, Birthday, Email, Gender) VALUES(?, ?, ?, ?, ?);";
@@ -27,6 +30,8 @@ class UserStorage {
              });
                 
             }  
+
+
         }
     
             module.exports = UserStorage;
