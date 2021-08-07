@@ -1,10 +1,12 @@
 "use strict";
 
 const User = require("../../models/User");
-const ProductInfo = require("../../models/Product");
+const Product = require("../../models/Product");
 
 const db = require("../../config/db");
 const { response } = require("express");
+const { forEach } = require("async");
+
 
 
 
@@ -13,19 +15,21 @@ const output = {
     root: (req, res) => {
         
     },
-
-    /*login: (req, res) => {
-        
-    }, */
     register: (req, res) => {
        
     },
-    product: (req, res) =>{
-        db.query('SELECT * FROM PRODUCT', function (err, result) {
-            res.send(results)
-        });
-    }
+    product: async(req, res) =>{
+         const product = new Product();
+         const productresponse = await product.showproduct();
+         
+        //  productInfo.forEach({
+        //      console.log(productInfo);
+        //  });
+         //const productresponse =(product)
+         res.json(productresponse);
+     },
 };
+
 
 
 const process = {
@@ -41,13 +45,11 @@ const process = {
     },
     registerproduct: async(req, res)=> {
         const image ="/image/" + req.file.filename;
+        //console.log(req.file.filename);
         const productinfo = [req.body.name ,req.body.detail, image, req.body.compo, req.body.price, req.body.slevel, req.body.age];
         
-        const product = new ProductInfo(productinfo);
-        //console.log(product);
+        const product = new Product(productinfo);
         const productresponse = await product.registerproduct();
-        // // const imginfo = new ProductInfo(image);
-        // // const imgrespon = await imginfo.resisterim();
         return res.json(productresponse);                             
        
 

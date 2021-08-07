@@ -1,26 +1,27 @@
 "use strict";
 
 const express = require("express");
-const router = express.Router();
 const ctrl = require("./home.ctrl");
-const multer = require("multer");
-const upload = multer({ dest: "./upload"});
-
+const multer = require("multer");           //이미지 업로드 위한 multer 모듈
+const upload = multer({ 
+                        storage: multer.diskStorage({
+                        destination: function (req, file, cb){
+                            cb(null, "./upload");
+                        },
+                        filename: function (req, file, cb){
+                            cb(null, new Date().valueOf()+"_"+file.originalname);
+                        }
+                        }
+                        ),
+                     });     
+const router = express.Router();
 router.get("/", ctrl.output.root);  
 //router.get("/login", ctrl.output.login);
 router.get("/register", ctrl.output.register);
 router.get("/Product", ctrl.output.product);
 
-//router.post("/login", ctrl.process.login);
+
 router.post("/register", ctrl.process.register);
-//router.post("/Product", ctrl.process.registerproduct);
 router.post("/Product",  upload.single("image"), ctrl.process.registerproduct);
-//  => {
-//     try {
-//         ctrl.process.registerproduct(req.body);
-//         ctrl.process.registerproduct   //reqfile , reqbody 따로따로 보내보기 
-//     } catch (error) {
-//         next(error);
-//     }
-// });
-module.exports = router;    
+
+module.exports = router; 
