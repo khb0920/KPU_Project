@@ -24,8 +24,8 @@ app.use(function(req, res, next) {
 
 app.use(express.json());                        
 app.use(express.urlencoded({extended: true}));   //url 한글
-  //  이미지파일 업로드시 /image -> /upload로 보내겠다.
-app.use("/image", express.static("./upload")); 
+  
+app.use("/image", express.static("./upload"));    //  이미지파일 업로드시 /image -> /upload로 보내겠다.
 app.use("/", home);                              // 해당 루트 접속시 home실행
 
 

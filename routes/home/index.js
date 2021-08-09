@@ -19,9 +19,10 @@ router.get("/", ctrl.output.root);
 //router.get("/login", ctrl.output.login);
 router.get("/register", ctrl.output.register);
 router.get("/Product", ctrl.output.product);
+router.get("/Product/detail", ctrl.output.productdetail);
 
 
 router.post("/register", ctrl.process.register);
-router.post("/Product",  upload.single("image"), ctrl.process.registerproduct);
+router.post("/Product", upload.single("image"), ctrl.process.registerproduct);
 
 module.exports = router; 

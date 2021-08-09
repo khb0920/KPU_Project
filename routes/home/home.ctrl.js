@@ -5,8 +5,9 @@ const Product = require("../../models/Product");
 
 const db = require("../../config/db");
 const { response } = require("express");
-const { forEach } = require("async");
 
+const url = require("url");
+const { query } = require("../../config/db");
 
 
 
@@ -19,15 +20,17 @@ const output = {
        
     },
     product: async(req, res) =>{
-         const product = new Product();
-         const productresponse = await product.showproduct();
-         
-        //  productInfo.forEach({
-        //      console.log(productInfo);
-        //  });
-         //const productresponse =(product)
-         res.json(productresponse);
-     },
+        const product = new Product();
+        const productresponse = await product.showproduct();
+        res.json(productresponse);
+    },
+    productdetail: async(req, res) => {
+        const urlObj = url.parse(req.url, true).query;
+        const product = new Product(urlObj.id);
+        //console.log(product);
+        const productresponse = await product.showdetailproduct();
+        res.json(productresponse);
+    },
 };
 
 
@@ -44,6 +47,7 @@ const process = {
         return res.json(response);
     },
     registerproduct: async(req, res)=> {
+        try{
         const image ="/image/" + req.file.filename;
         //console.log(req.file.filename);
         const productinfo = [req.body.name ,req.body.detail, image, req.body.compo, req.body.price, req.body.slevel, req.body.age];
@@ -52,7 +56,9 @@ const process = {
         const productresponse = await product.registerproduct();
         return res.json(productresponse);                             
        
-
+        }catch(err){
+            return{success: false ,msg:console.error()};
+        }
     },
 };
 
