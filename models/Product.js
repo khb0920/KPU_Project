@@ -1,8 +1,6 @@
 "use strict";
 
-//const UserStorage = require("./UserStorage");
 const db = require("../config/db");
-const fs = require('fs'); 
 
 class Product {
     constructor(body) {
@@ -10,7 +8,6 @@ class Product {
 
     }
      async registerproduct(){
-           
             return new Promise((resolve, reject) => {
                 const query = "INSERT INTO Product(ProductName, ProductDetail, ProductImg, ProductCompo, ProductPrice, ProductSLevel, ProductAge) VALUES(?, ?, ?, ?, ?, ?, ?);";
                 db.query(
@@ -36,7 +33,7 @@ class Product {
     async showdetailproduct(){
         //console.log(this.body);
         return new Promise((resolve, reject) => {
-            const query = `SELECT ProductImg FROM Product WHERE ProductNum=${this.body};`;
+            const query = `SELECT * FROM Product,Review WHERE Product.ProductNum= ${this.body};`;
             db.query(
                 query,
                 (err, data) => {
