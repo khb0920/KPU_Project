@@ -31,14 +31,16 @@ class Product {
         });
     }
     async showdetailproduct(){
-        //console.log(this.body);
+        //console.log(this.body.membernum);
         return new Promise((resolve, reject) => {
-            const query = `SELECT * FROM Product,Review WHERE Product.ProductNum= ${this.body};`;
+            const query1 = `SELECT Review.ProductNum, productName, ReviewNum, ReviewTitle, ReviewDetail, ReviewScore, ReviewImg, Gender, Age_range, Nickname FROM Review, Product, Member 
+            WHERE Review.ProductNum = Product.ProductNum AND Review.MemberNum = Member.MemberNum AND Review.ProductNum='${this.body.productnum}';`;
+            //const query2 = `SELECT * FROM Review WHERE Review.ProductNum=${this.body.productnum};`;
             db.query(
-                query,
+                query1,
                 (err, data) => {
                     if(err) reject(`${err}`);
-                    resolve(data);
+                    resolve(data); //이름 나이대 성별만 리뷰에나오게 그러면 review테이블에 membername gender age 추가 
             });
         });
     }

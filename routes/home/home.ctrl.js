@@ -33,7 +33,9 @@ const output = {
     productdetail: async(req, res) => {
         try{
         const urlObj = url.parse(req.url, true).query;
-        const product = new Product(urlObj.id);
+        const productnum = urlObj.productid
+               
+        const product = new Product(productnum);
         //console.log(product);
         const productresponse = await product.showdetailproduct();
         res.json(productresponse);
