@@ -31,16 +31,15 @@ class Product {
         });
     }
     async showdetailproduct(){
-        //console.log(this.body.membernum);
+        //console.log(this.body);
         return new Promise((resolve, reject) => {
-            const query1 = `SELECT Review.ProductNum, productName, ReviewNum, ReviewTitle, ReviewDetail, ReviewScore, ReviewImg, Gender, Age_range, Nickname FROM Review, Product, Member 
-            WHERE Review.ProductNum = Product.ProductNum AND Review.MemberNum = Member.MemberNum AND Review.ProductNum='${this.body.productnum}';`;
-            //const query2 = `SELECT * FROM Review WHERE Review.ProductNum=${this.body.productnum};`;
+            const query1 = `SELECT Review.ProductNum, productName, productDetail, productImg, productCompo, productPrice, productSLevel, ReviewNum, ReviewTitle, ReviewDetail, ReviewScore, ReviewImg, Gender, Age_range, Nickname FROM Review, Product, Member 
+            WHERE Review.ProductNum = Product.ProductNum AND Review.MemberNum = Member.MemberNum AND Review.ProductNum='&{this.body}';`;
             db.query(
                 query1,
                 (err, data) => {
                     if(err) reject(`${err}`);
-                    resolve(data); //이름 나이대 성별만 리뷰에나오게 그러면 review테이블에 membername gender age 추가 
+                    console.log(data); 
             });
         });
     }

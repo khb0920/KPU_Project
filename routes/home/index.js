@@ -22,7 +22,8 @@ router.get("/", ctrl.output.root);
 router.get("/Member", ctrl.output.member);
 router.get("/Product", ctrl.output.product);
 router.get("/Product/detail", ctrl.output.productdetail);
-router.get("/Review", ctrl.output.review)
+router.get("/Review", ctrl.output.review);
+router.get("/Rank", ctrl.output.rank);
 
 
 

@@ -3,7 +3,7 @@
 const User = require("../../models/User");
 const Product = require("../../models/Product");
 const Review = require("../../models/Review");
-
+const Rank = require("../../models/Rank");
 const db = require("../../config/db");
 const { response } = require("express");
 
@@ -34,7 +34,6 @@ const output = {
         try{
         const urlObj = url.parse(req.url, true).query;
         const productnum = urlObj.productid
-               
         const product = new Product(productnum);
         //console.log(product);
         const productresponse = await product.showdetailproduct();
@@ -49,6 +48,16 @@ const output = {
         const review = new Review();
         const reviewresponse = await review.showreview();
         res.json(reviewresponse);
+        }
+        catch(err){
+            return{success: false ,msg:console.error()};
+        }
+    },
+    rank: async(req, res) =>{
+        try{
+        const rank = new Rank();
+        const rankresponse = await rank.showrank();
+        res.json(rankresponse);
         }
         catch(err){
             return{success: false ,msg:console.error()};
@@ -87,12 +96,16 @@ const process = {
         }
     },
     registerreview: async(req, res) => {
+        try{
         const image ="/image/" +req.file.filename;
         const reviewinfo = [req.body.title, req.body.detail, req.body.score, image, req.body.member, req.body.product];
         const review = new Review(reviewinfo);
         //console.log(review);
         const reviewresponse = await review.registerreview();
         return res.json(reviewresponse);
+        }catch(err){
+            return{success: false, msg:console.error()};
+        }
     },
 };
 
