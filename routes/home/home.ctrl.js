@@ -4,6 +4,7 @@ const User = require("../../models/User");
 const Product = require("../../models/Product");
 const Review = require("../../models/Review");
 const Rank = require("../../models/Rank");
+const Request = require("../../models/Request");
 const db = require("../../config/db");
 const { response } = require("express");
 
@@ -32,10 +33,7 @@ const output = {
     },
     productdetail: async(req, res) => {
         try{
-        const urlObj = url.parse(req.url, true).query;
-        const productnum = urlObj.productid
-        const product = new Product(productnum);
-        //console.log(product);
+        const product = new Product(req.params);
         const productresponse = await product.showdetailproduct();
         res.json(productresponse);
         }
@@ -107,6 +105,15 @@ const process = {
             return{success: false, msg:console.error()};
         }
     },
+    registerrequest: async(req, res) => {
+        try{
+        const request = new Request(req.body);
+        const requsetresponse = await request.registerreview();
+        return res.json(requsetresponse);
+        }catch(err){
+            return{success: false, msg:console.error()};
+        }
+    }
 };
 
 module.exports ={

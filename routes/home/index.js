@@ -21,7 +21,7 @@ router.get("/", ctrl.output.root);
 //router.get("/login", ctrl.output.login);
 router.get("/Member", ctrl.output.member);
 router.get("/Product", ctrl.output.product);
-router.get("/Product/detail", ctrl.output.productdetail);
+router.get("/Product/detail/:productid", ctrl.output.productdetail);
 router.get("/Review", ctrl.output.review);
 router.get("/Rank", ctrl.output.rank);
 
@@ -30,4 +30,5 @@ router.get("/Rank", ctrl.output.rank);
 router.post("/Member", ctrl.process.registermember);
 router.post("/Product", upload.single("image"), ctrl.process.registerproduct);
 router.post("/Review", upload.single("image"), ctrl.process.registerreview);
+router.post("/Request", ctrl.process.registerrequest);
 module.exports = router;

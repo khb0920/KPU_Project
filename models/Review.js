@@ -20,7 +20,7 @@ class Review{
      }
      async showreview(){
         return new Promise((resolve, reject) => {
-            const query = "SELECT Distinct Review.ProductNum, productName, productDetail, productImg, productCompo, productPrice, productSLevel, ReviewNum, ReviewTitle, ReviewDetail, ReviewScore, ReviewImg, Gender, Age_range, Nickname, Birthday, Email FROM Review, Product, Member WHERE Review.ProductNum = Product.ProductNum AND Review.MemberNum = Member.MemberNum ;";
+            const query = "SELECT Distinct Review.ProductNum, productName, productDetail, productImg, productCompo, productPrice, productSLevel, ReviewNum, ReviewTitle, ReviewDetail, ReviewScore, ReviewImg, Gender, Age_range, Nickname, Birthday, Email FROM Review, Product, Member WHERE Review.ProductNum = Product.ProductNum AND Review.MemberNum = Member.MemberNum ORDER BY ReviewNum DESC;";
             db.query(
                 query,
                 (err, data) => {

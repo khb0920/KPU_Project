@@ -21,7 +21,7 @@ class Product {
         }
      async showproduct(){
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM Product;";
+            const query = "SELECT * FROM Product ORDER BY ProductNum DESC;";
             db.query(
                 query,
                 (err, data) => {
@@ -31,21 +31,19 @@ class Product {
         });
     }
     async showdetailproduct(){
-        //console.log(this.body);
         return new Promise((resolve, reject) => {
             const query1 = `SELECT Review.ProductNum, productName, productDetail, productImg, productCompo, productPrice, productSLevel, ReviewNum, ReviewTitle, ReviewDetail, ReviewScore, ReviewImg, Gender, Age_range, Nickname FROM Review, Product, Member 
-            WHERE Review.ProductNum = Product.ProductNum AND Review.MemberNum = Member.MemberNum AND Review.ProductNum='&{this.body}';`;
+            WHERE Review.ProductNum = Product.ProductNum AND Review.MemberNum = Member.MemberNum AND Review.ProductNum=${this.body.productid};`;
+            const query2 = `SELECT ProductNum, productName, productDetail, productImg, productCompo, productPrice, productSLevel FROM Product WHERE Product.ProductNum = ${this.body.productid};`;
             db.query(
-                query1,
+                query1+query2,
                 (err, data) => {
                     if(err) reject(`${err}`);
-                    console.log(data); 
+                    resolve(data); 
             });
         });
     }
     }
-
-
 
 
 module.exports = Product;
