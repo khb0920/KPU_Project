@@ -32,4 +32,6 @@ router.post("/Product", upload.single("image"), ctrl.process.registerproduct);
 router.post("/Review", upload.single("image"), ctrl.process.registerreview);
 router.post("/Request", ctrl.process.registerrequest);
 
+router.post("/Delete/:reviewid", ctrl.process.delete);
+
 module.exports = router;

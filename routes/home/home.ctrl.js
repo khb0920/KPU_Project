@@ -6,6 +6,7 @@ const Review = require("../../models/Review");
 const Rank = require("../../models/Rank");
 const Request = require("../../models/Request");
 const Update = require("../../models/Update");
+const Delete = require("../../models/Delete");
 const db = require("../../config/db");
 const { response } = require("express");
 
@@ -141,6 +142,12 @@ const process = {
         }catch(err){
             return{success: false, msg:console.error()};
         }
+    },
+    delete: async(req,res) => {
+        const id = [req.params.reviewid, req.body.productid];
+        const deleteinfo = new Delete(id);
+        const deleteresponse = await deleteinfo.deletereview();
+        return res.json(deleteresponse);
     }
 };
 
