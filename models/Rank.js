@@ -8,7 +8,7 @@ class Rank{
     }
      async showrank(){
         return new Promise((resolve, reject) => {
-            const query = "SELECT ProductNum, ProductName, ProductDetail, ProductImg, ProductCompo, ProductPrice, ProductSlevel, ProductAge FROM Product ORDER BY ProductCount desc LIMIT 2;";
+            const query = "SELECT ProductNum, ProductName, ProductDetail, ProductImg, ProductCompo, ProductPrice, ProductSlevel, ProductAge FROM Product ORDER BY ProductCount desc LIMIT 6;";
             db.query(
                 query,
                 (err, data) => {

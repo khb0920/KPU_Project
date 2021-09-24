@@ -1,6 +1,7 @@
 "use strict";
 
 const { response } = require("express");
+const db = require("../config/db");
 const UserStorage = require("./UserStorage");
 
 class User {
@@ -23,6 +24,18 @@ class User {
             return { success: false, msg: err };
             
         }
+    }
+    async showmember(){
+        //console.log(this.body.memberid);
+        return new Promise((resolve, reject) => {
+            const query = `SELECT * FROM Review WHERE Review.ID = ${this.body.memberid};`;
+            db.query(
+                query,
+                (err, data) => {
+                    if(err) reject(`${err}`);
+                    resolve(data); 
+            });
+        });
     }
 
 }

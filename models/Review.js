@@ -8,7 +8,7 @@ class Review{
     }
      async registerreview(){
         return new Promise((resolve, reject) => {
-            const query = `INSERT INTO Review(ReviewTitle, ReviewDetail, ReviewScore, ReviewImg, MemberNum, ProductNum) VALUES(?, ?, ?, ?, ?, ?); UPDATE Product SET ProductCount = ProductCount + 1 WHERE ProductNum=${this.body[5]};`;
+            const query = `INSERT INTO Review(ReviewTitle, ReviewDetail, ReviewScore, ReviewImg, ProductNum, Email, ID) VALUES(?, ?, ?, ?, ?, ?, ?); UPDATE Product SET ProductCount = ProductCount + 1 WHERE ProductNum=${this.body[4]};`;
             db.query(
                 query,
                 this.body,
@@ -20,12 +20,12 @@ class Review{
      }
      async showreview(){
         return new Promise((resolve, reject) => {
-            const query = "SELECT Distinct Review.ProductNum, productName, productDetail, productImg, productCompo, productPrice, productSLevel, ReviewNum, ReviewTitle, ReviewDetail, ReviewScore, ReviewImg, Gender, Age_range, Nickname, Birthday, Email FROM Review, Product, Member WHERE Review.ProductNum = Product.ProductNum AND Review.MemberNum = Member.MemberNum ORDER BY ReviewNum DESC;";
+            const query = "SELECT Distinct Review.ProductNum, ProductName, ProductDetail, ProductImg, ProductCompo, ProductPrice, ProductSLevel, ProductF1, ProductF2, ProductF3, ReviewNum, ReviewTitle, ReviewDetail, ReviewScore, ReviewImg, Gender, Age_range, Nickname, Birthday, Member.Email FROM Review, Product, Member WHERE Review.ProductNum = Product.ProductNum AND Review.Email = Member.Email ORDER BY ReviewNum DESC;";
             db.query(
                 query,
                 (err, data) => {
                     if(err) reject(`${err}`);
-                    resolve(data);
+                    console.log(data);
             });
         });
     }

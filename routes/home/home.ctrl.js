@@ -5,6 +5,7 @@ const Product = require("../../models/Product");
 const Review = require("../../models/Review");
 const Rank = require("../../models/Rank");
 const Request = require("../../models/Request");
+const Update = require("../../models/Update");
 const db = require("../../config/db");
 const { response } = require("express");
 
@@ -18,8 +19,14 @@ const output = {
     root: (req, res) => {
         
     },
-    member: (req, res) => {
-       
+    member: async(req, res) => {
+        try{
+        const member = new User(req.params);
+        const memberresponse = await member.showmember();
+        res.json(memberresponse);
+        }catch(err){
+            return{success: false ,msg:console.error()};
+        }
     },
     product: async(req, res) =>{
         try{
@@ -61,6 +68,16 @@ const output = {
             return{success: false ,msg:console.error()};
         }
     },
+    requestPD: async(req, res) =>{
+        try{
+        const requestPD = new Request();
+        const requestPDresponse = await requestPD.showrequestPD();
+        res.json(requestPDresponse);  
+        }
+        catch(err){
+            return{success: false, msg:console.err()};
+        }
+    },
 };
 
 
@@ -84,19 +101,19 @@ const process = {
         try{
         const image ="/image/" + req.file.filename;
         //console.log(req.file.filename);
-        const productinfo = [req.body.name ,req.body.detail, image, req.body.compo, req.body.price, req.body.slevel, req.body.age];
+        const productinfo = [req.body.name ,req.body.detail, image, req.body.compo, req.body.price, req.body.slevel, req.body.age, req.body.productf1, req.body.productf2, req.body.productf3];
         const product = new Product(productinfo);
         const productresponse = await product.registerproduct();
         return res.json(productresponse);                             
        
-        }catch(err){
+        }catch(err){ 
             return{success: false ,msg:console.error()};
         }
     },
     registerreview: async(req, res) => {
         try{
         const image ="/image/" +req.file.filename;
-        const reviewinfo = [req.body.title, req.body.detail, req.body.score, image, req.body.member, req.body.product];
+        const reviewinfo = [req.body.title, req.body.detail, req.body.score, image, req.body.product, req.body.email, req.body.id];
         const review = new Review(reviewinfo);
         //console.log(review);
         const reviewresponse = await review.registerreview();
@@ -106,10 +123,21 @@ const process = {
         }
     },
     registerrequest: async(req, res) => {
-        try{
+        try{ 
         const request = new Request(req.body);
-        const requsetresponse = await request.registerreview();
+        const requsetresponse = await request.registerrequest();
         return res.json(requsetresponse);
+        }catch(err){
+            return{success: false, msg:console.error()};
+        }
+    },
+    update: async(req, res) => {
+        try{
+        const image ="/image/" + req.file.filename;
+        const reviewupdate = [req.params.reviewid, req.body.title, req.body.detail, req.body.score, image];
+        const updateinfo = new Update(reviewupdate);
+        const updateresponse = await updateinfo.updatereview();
+        return res.json(updateresponse);
         }catch(err){
             return{success: false, msg:console.error()};
         }
