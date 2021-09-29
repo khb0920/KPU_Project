@@ -7,6 +7,7 @@ const Rank = require("../../models/Rank");
 const Request = require("../../models/Request");
 const Update = require("../../models/Update");
 const Delete = require("../../models/Delete");
+const Avoid = require("../../models/Avoid");
 const db = require("../../config/db");
 const { response } = require("express");
 
@@ -76,7 +77,17 @@ const output = {
         res.json(requestPDresponse);  
         }
         catch(err){
-            return{success: false, msg:console.err()};
+            return{success: false, msg:console.error()};
+        }
+    },
+    avoid: async(req, res) =>{
+        try{
+        const avoidid = new Avoid(req.params);
+        const avoidresponse = await avoidid.showavoid();
+        res.json(avoidresponse);  
+        }
+        catch(err){
+            return{success: false, msg: console.error()};
         }
     },
 };

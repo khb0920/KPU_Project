@@ -24,6 +24,8 @@ router.get("/Product/detail/:productid", ctrl.output.productdetail);
 router.get("/Review", ctrl.output.review);
 router.get("/Rank", ctrl.output.rank);
 router.get("/Request", ctrl.output.requestPD);
+router.get("/Avoid/:avoidid" ,ctrl.output.avoid);    
+
 
 router.post("/Update/:reviewid", upload.single("image"), ctrl.process.update);
 

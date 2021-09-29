@@ -9,7 +9,7 @@ class Product {
     }
      async registerproduct(){
             return new Promise((resolve, reject) => {
-                const query = "INSERT INTO Product(ProductName, ProductDetail, ProductImg, ProductCompo, ProductPrice, ProductSLevel, ProductAge, ProductF1, ProductF2, ProductF3) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                const query = "INSERT INTO Product(ProductName, ProductDetail, ProductImg, ProductCompo, ProductPrice, ProductSLevel, ProductAge, ProductF1, ProductF2, ProductF3, ProductA) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
                 db.query(
                     query,
                     this.body,
